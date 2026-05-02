@@ -815,7 +815,9 @@ footer {
   width: max-content;
   animation: marquee 30s linear infinite;
 }
-
+.chapter:first-child {
+  border-top: none;
+}
 .tech-track span {
   font-family: var(--mono);
   font-size: 12px;
