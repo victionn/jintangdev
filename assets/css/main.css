@@ -322,11 +322,9 @@ strong { color: var(--text); font-weight: 500; }
 .lightbox-close:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
 
 /* ── Extracurriculars ── */
-#extracurriculars {
-  border-top: 1px solid var(--border);
-  padding: 7rem 0 0;
-}
-
+#extracurriculars { padding: 3rem 0 0; }
+.project-footer { margin-top: auto; padding-top: 2rem; }
+.chapter { padding: 3rem 4rem; }
 .extra-intro-block {
   padding: 0 4rem;
   display: grid;
@@ -592,7 +590,7 @@ strong { color: var(--text); font-weight: 500; }
   color: var(--muted);
   margin-top: -0.5rem;
 }
-
+#projects { padding-bottom: 0; }
 /* Video centerpiece variant — keeps the card frame + corner annotations identical, swaps the icon/title block for a 9:16 video */
 /* Video frame variant — drop the poster, frame the video like a portfolio plate */
 /* Video frame variant — minimal video with editorial corner brackets */
