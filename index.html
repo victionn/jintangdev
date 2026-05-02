@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Jintang Zhao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="nav">
+  <a href="#hero" class="nav-logo">YN<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#extracurriculars">Extras</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div style="position:relative;z-index:1;">
+ <h1 class="hero-title">Hi!<br>I'm <br>Jintang</br><br></h1>
+    <p class="hero-sub">I'm a passionate software engineer from Perth, Western Australia studying Bachelor of Advanced Computing at the University of Sydney. My journey started with curiosity and grew into a full stack skill set that spans from pixel perfect user interfaces to robust backend systems.
+
+When I'm not shipping code, I'm going to the gym, playing football or hanging out with mates!</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <span class="hero-counter">2025</span>
+</section>
+
+
+
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <h2 class="section-title reveal">Selected Projects</h2>
+    </div>
+  </div>
+  <div class="projects-grid">
+<article class="project-card project-card--main reveal">
+  <div class="project-body">
+    <p class="project-number">Project 01</p>
+    <div class="project-tags">
+      <span class="tag">Full Stack</span>
+      <span class="tag">JavaScript</span>
+            <span class="tag">CSS</span>
+                  <span class="tag">HTML</span>
+      <span class="tag">Node.js</span>
+      <span class="tag">Python</span>
+      <span class="tag">Ether.js</span>
+    </div>
+    <h3 class="project-title">Deployed Event Driven Crypto Trading Algorithm</h3>
+<p class="project-desc">This full stack event driven trading sniper is designed to execute high contention trades based on real time big impact market signals. Optimised to achieve 30ms average transaction time with asynchronous multi wallet RPC broadcast using keep alive and RPC racing. Achieved <strong>~2000% ROI - $500 to $12,000 USD</strong> in 3 months.</p>    <div class="project-footer">
+      <div class="project-links">
+        <a href="#" class="project-link">GitHub</a>
+      </div>
+
+    </div>
+  </div>
+  <div class="project-media">
+    <div class="project-visual">
+      <div class="video-showcase">
+        <video class="project-video" src="assets/videos/sniper-bot.mp4" autoplay muted loop playsinline></video>
+        <div class="video-overlay">
+          <button class="video-unmute-btn" onclick="toggleMute(this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path class="icon-muted" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 1.504a.5.5 0 0 1 0 .707L12.207 7.5l1.647 1.647a.5.5 0 0 1-.708.708L11.5 8.207l-1.646 1.648a.5.5 0 0 1-.708-.708L10.793 7.5 9.146 5.854a.5.5 0 0 1 .708-.708L11.5 6.793l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+              <path class="icon-unmuted" style="display:none" d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707zm-1.414-1.414A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.903-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.889l.707.707zm-1.417-1.415A4.48 4.48 0 0 0 10.025 8a4.48 4.48 0 0 0-1.32-3.172l-.707.707A3.483 3.483 0 0 1 9.025 8a3.483 3.483 0 0 1-1.027 2.465l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+            </svg>
+          </button>
+        </div>
+        <button class="video-enlarge-btn" onclick="openLightbox(this)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M1.5 1h4a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 1 1-.708.708L2 2.707V5.5a.5.5 0 0 1-1 0v-4A.5.5 0 0 1 1.5 1zm13 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V2.707l-3.146 3.147a.5.5 0 0 1-.708-.708L13.293 2H10.5a.5.5 0 0 1 0-1h4zM1 10.5a.5.5 0 0 1 1 0v2.793l3.146-3.147a.5.5 0 0 1 .708.708L2.707 14H5.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4zm15 0v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1 0-1h2.793l-3.147-3.146a.5.5 0 0 1 .708-.708L14 13.293V10.5a.5.5 0 0 1 1 0z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="project-images">
+      <div class="project-img-item"><img src="assets/images/project1-1.png" alt="Screenshot 1"></div>
+      <div class="project-img-item"><img src="assets/images/project1-2.png" alt="Screenshot 2"></div>
+      <div class="project-img-item"><img src="assets/images/project1-3.png" alt="Screenshot 3"></div>
+      <div class="project-img-item"><img src="assets/images/project1-4.png" alt="Screenshot 4"></div>
+    </div>
+  </div>
+</article>
+<article class="project-card reveal" style="flex-direction:row; align-items:flex-start; gap:2rem; padding:2.5rem;">
+  <div style="flex:1; min-width:0;">
+    <p class="project-number">Project 02</p>
+    <div class="project-tags"><span class="tag">Java</span><span class="tag">Gradle</span></div>
+    <h3 class="project-title">Pacman!</h3>
+    <p class="project-desc">This project is a Java-based implementation of the classic Pacman game, designed with a strong focus on object-oriented design and software engineering principles. The system leverages multiple design patterns to create a modular, extensible, and maintainable architecture.</p>
+    <div class="project-footer">
+      <div class="project-links"><a href="#" class="project-link">GitHub</a></div>
+
+    </div>
+  </div>
+  <img src="assets/images/pacman.gif" alt="Pacman demo" class="project-gif">
+</article>
+
+<article class="project-card reveal" style="flex-direction:row; align-items:flex-start; gap:2rem; padding:2.5rem;">
+  <div style="flex:1; min-width:0;">
+    <p class="project-number">Project 03</p>
+    <div class="project-tags"><span class="tag">C#</span><span class="tag">Bash</span></div>
+    <h3 class="project-title">Bytetyde</h3>
+    <p class="project-desc">Peer-to-peer file distribution system in C, inspired by BitTorrent. Built a custom package parser, Merkle tree integrity verification, and multithreaded client/server networking with mutex-safe peer management. Implemented adaptive chunk scheduling to optimise transfer speeds across varying network conditions.</p>
+    <div class="project-footer">
+      <div class="project-links">
+        <a href="#" class="project-link">GitHub</a>
+      </div>
+
+    </div>
+  </div>
+  <img src="assets/images/bittorrent.png" alt="Bytetyde demo" class="project-gif" style="margin-top: 2rem;">
+</article>
+
+
+
+  </div>
+</section>
+
+<section id="extracurriculars">
+
+  <!-- ── Section header ── -->
+  <div class="extra-intro-block">
+    <div>
+      <p class="section-label reveal">03 — Extracurriculars</p>
+      <h2 class="section-title reveal">Off the<br>keyboard,<br><em>on the pitch</em>.</h2>
+    </div>
+    <p class="extra-intro reveal">
+      Three things I do when I'm not shipping code. They each taught me something the keyboard couldn't —
+      reading systems, reading rooms, and reading an audience.
+    </p>
+  </div>
+
+  <!-- ── Chapters ── -->
+  <div class="chapters">
+
+    <!-- 01 SOCCER -->
+    <article class="chapter">
+      <div class="chapter-rail">
+        <span class="chapter-rail-num">01</span>
+        <span class="chapter-rail-mark">— Chapter one</span>
+      </div>
+
+      <div class="chapter-content">
+        <p class="chapter-tag reveal">Active player</p>
+        <h3 class="chapter-title reveal">Soccer<br><em>player</em>.</h3>
+        <p class="chapter-meta reveal">2014 — Present · Midfielder</p>
+        <p class="chapter-desc reveal">
+          A decade on the pitch and counting. Started kicking a ball around suburban Perth, now a regular for university
+          and weekend club games in Sydney. Football is where I first learned to read systems before I knew what a system
+          was — anticipating runs, shaping space, recovering from a misplaced pass. The same instincts I lean on when I'm
+          debugging a flaky service at 2am.
+        </p>
+        <ul class="chapter-stats reveal">
+          <li><span class="stat-num">10<em>+</em></span><span class="stat-label">Years played</span></li>
+          <li><span class="stat-num">200<em>+</em></span><span class="stat-label">Matches</span></li>
+          <li><span class="stat-num"><em>CM</em></span><span class="stat-label">Position</span></li>
+        </ul>
+      </div>
+
+     <div class="chapter-visual chapter-visual--video reveal">
+  <div class="video-showcase">
+    <video class="chapter-video" src="assets/videos/pen.mp4" autoplay muted loop playsinline></video>
+    <div class="video-overlay">
+      <button class="video-unmute-btn" onclick="toggleMute(this)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path class="icon-muted" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 1.504a.5.5 0 0 1 0 .707L12.207 7.5l1.647 1.647a.5.5 0 0 1-.708.708L11.5 8.207l-1.646 1.648a.5.5 0 0 1-.708-.708L10.793 7.5 9.146 5.854a.5.5 0 0 1 .708-.708L11.5 6.793l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+          <path class="icon-unmuted" style="display:none" d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707zm-1.414-1.414A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.903-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.889l.707.707zm-1.417-1.415A4.48 4.48 0 0 0 10.025 8a4.48 4.48 0 0 0-1.32-3.172l-.707.707A3.483 3.483 0 0 1 9.025 8a3.483 3.483 0 0 1-1.027 2.465l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+        </svg>
+      </button>
+    </div>
+    <button class="video-enlarge-btn" onclick="openLightbox(this)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M1.5 1h4a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 1 1-.708.708L2 2.707V5.5a.5.5 0 0 1-1 0v-4A.5.5 0 0 1 1.5 1zm13 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V2.707l-3.146 3.147a.5.5 0 0 1-.708-.708L13.293 2H10.5a.5.5 0 0 1 0-1h4zM1 10.5a.5.5 0 0 1 1 0v2.793l3.146-3.147a.5.5 0 0 1 .708.708L2.707 14H5.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4zm15 0v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1 0-1h2.793l-3.147-3.146a.5.5 0 0 1 .708-.708L14 13.293V10.5a.5.5 0 0 1 1 0z"/>
+      </svg>
+    </button>
+  </div>
+</div>
+        <div class="visual-row">
+          <span>Midfielder<br>№ 8</span>
+          <span style="text-align:right;">Sat. 3pm<br>Kick-off</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 BARTENDER -->
+    <article class="chapter chapter--reverse">
+      <div class="chapter-rail">
+        <span class="chapter-rail-num">02</span>
+        <span class="chapter-rail-mark">— Chapter two</span>
+      </div>
+
+      <div class="chapter-content">
+        <p class="chapter-tag reveal">Weekends behind the bar</p>
+        <h3 class="chapter-title reveal"><em>Bartender</em><br>&amp; host.</h3>
+        <p class="chapter-meta reveal">2023 — Present · Sydney</p>
+        <p class="chapter-desc reveal">
+          I work weekends at a cocktail bar in Sydney's inner west, and the lessons translate harder than I expected.
+          Reading a room of strangers, finding the right thing to say, building a drink from a vague brief — it's the
+          same shape as a good user interview. I've learned more about hospitality, listening, and pacing here than
+          any classroom.
+        </p>
+        <ul class="chapter-stats reveal">
+          <li><span class="stat-num">2<em>yr</em></span><span class="stat-label">On the floor</span></li>
+          <li><span class="stat-num">60<em>+</em></span><span class="stat-label">Recipes</span></li>
+          <li><span class="stat-num">10k<em>+</em></span><span class="stat-label">Drinks poured</span></li>
+        </ul>
+      </div>
+
+      <div class="chapter-visual chapter-visual--video reveal">
+        <div class="visual-row">
+          <span><span class="visual-mark">Est.</span>2023</span>
+          <span style="text-align:right;">№ 02<br>Inner West</span>
+        </div>
+        <div class="visual-center">
+          <div class="video-showcase">
+            <video class="chapter-video" src="assets/videos/bar.mp4" autoplay muted loop playsinline></video>
+            <div class="video-overlay">
+              <button class="video-unmute-btn" onclick="toggleMute(this)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path class="icon-muted" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 1.504a.5.5 0 0 1 0 .707L12.207 7.5l1.647 1.647a.5.5 0 0 1-.708.708L11.5 8.207l-1.646 1.648a.5.5 0 0 1-.708-.708L10.793 7.5 9.146 5.854a.5.5 0 0 1 .708-.708L11.5 6.793l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+                  <path class="icon-unmuted" style="display:none" d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707zm-1.414-1.414A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.903-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.889l.707.707zm-1.417-1.415A4.48 4.48 0 0 0 10.025 8a4.48 4.48 0 0 0-1.32-3.172l-.707.707A3.483 3.483 0 0 1 9.025 8a3.483 3.483 0 0 1-1.027 2.465l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+                </svg>
+              </button>
+            </div>
+            <button class="video-enlarge-btn" onclick="openLightbox(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M1.5 1h4a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 1 1-.708.708L2 2.707V5.5a.5.5 0 0 1-1 0v-4A.5.5 0 0 1 1.5 1zm13 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V2.707l-3.146 3.147a.5.5 0 0 1-.708-.708L13.293 2H10.5a.5.5 0 0 1 0-1h4zM1 10.5a.5.5 0 0 1 1 0v2.793l3.146-3.147a.5.5 0 0 1 .708.708L2.707 14H5.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4zm15 0v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1 0-1h2.793l-3.147-3.146a.5.5 0 0 1 .708-.708L14 13.293V10.5a.5.5 0 0 1 1 0z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="visual-row">
+          <span>House special<br>2 oz · stirred</span>
+          <span style="text-align:right;">Fri — Sun<br>Late shift</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 YOUTUBER -->
+    <article class="chapter">
+      <div class="chapter-rail">
+        <span class="chapter-rail-num">03</span>
+        <span class="chapter-rail-mark">— Chapter three</span>
+      </div>
+
+      <div class="chapter-content">
+        <p class="chapter-tag reveal">Creator &amp; storyteller</p>
+        <h3 class="chapter-title reveal"><em>Content</em><br>creator.</h3>
+        <p class="chapter-meta reveal">2020 — Present · Online</p>
+        <p class="chapter-desc reveal">
+          I run a YouTube channel where I tell stories that wouldn't fit anywhere else — long-form essays, builds, and
+          the occasional dive into a corner of the internet I think more people should know about. Editing taught me
+          pacing in a way writing never did: cut early, cut often, trust the audience to keep up.
+        </p>
+        <ul class="chapter-stats reveal">
+          <li><span class="stat-num">5<em>yr</em></span><span class="stat-label">Behind the lens</span></li>
+          <li><span class="stat-num">50<em>+</em></span><span class="stat-label">Videos shipped</span></li>
+          <li><span class="stat-num"><em>Long</em></span><span class="stat-label">Form first</span></li>
+        </ul>
+      </div>
+
+      <div class="chapter-visual reveal">
+        <div class="visual-row">
+          <span><span class="visual-mark">Est.</span>2020</span>
+          <span style="text-align:right;">№ 03<br>Anywhere</span>
+        </div>
+        <div class="visual-center">
+          <div class="visual-icon">
+            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+              <rect x="20" y="30" width="60" height="40" rx="2"/>
+              <circle cx="50" cy="50" r="13"/>
+              <polygon points="46,43 46,57 58,50" fill="currentColor"/>
+              <rect x="14" y="33" width="3" height="3" fill="currentColor"/>
+              <rect x="14" y="48.5" width="3" height="3" fill="currentColor"/>
+              <rect x="14" y="64" width="3" height="3" fill="currentColor"/>
+              <rect x="83" y="33" width="3" height="3" fill="currentColor"/>
+              <rect x="83" y="48.5" width="3" height="3" fill="currentColor"/>
+              <rect x="83" y="64" width="3" height="3" fill="currentColor"/>
+              <line x1="26" y1="22" x2="74" y2="22" opacity="0.4"/>
+              <line x1="32" y1="78" x2="68" y2="78" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="visual-display">Frame</div>
+          <div class="visual-divider"></div>
+          <div class="visual-caption">Cut. Cut. Trust.</div>
+        </div>
+        <div class="visual-row">
+          <span>4K · 24fps<br>Long-form</span>
+          <span style="text-align:right;">Take 03<br>Rolling</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Closing flourish -->
+    <div class="chapter-end">
+      <span class="chapter-end-mark">— end.</span>
+      <span class="chapter-end-line">Three lives, one keyboard. Always shipping.</span>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="contact">
+  <p class="section-label reveal">04 — Contact</p>
+  <h2 class="section-title reveal">Let's connect!<br></h2>
+  <div class="contact-inner">
+<div class="reveal">
+<a href="mailto:jintangzhao2011@gmail.com" class="contact-email">jintangzhao2011@gmail.com</a>
+<a href="tel:+61405655674" class="contact-email" style="margin-top: 0.75rem; display: inline-block;">+61 405 655 674</a>  <div class="contact-socials">
+    <a href="#" class="social-link">GitHub</a>
+    <a href="#" class="social-link">LinkedIn</a>
+    <a href="#" class="social-link">Twitter</a>
+  </div>
+</div>
+    <div class="contact-note reveal">
+      <p>I'm currently open to part time and grad roles, or interesting projects. Feel free to reach out!</p>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Designed &amp; built by Jintang Zhao — 2026</span>
+  <a href="#hero" id="back-top" style="color:var(--muted);text-decoration:none;transition:color 0.2s;">Back to top ↑</a>
+</footer>
+
+<script src="assets/js/animations.js" defer></script>
+<script src="assets/js/projects.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+<!-- Video lightbox -->
+<div id="video-lightbox" class="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div class="lightbox-inner">
+    <video id="lightbox-video" autoplay loop playsinline></video>
+  </div>
+</div>
+</body>
+</html>
