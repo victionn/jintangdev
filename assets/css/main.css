@@ -138,7 +138,7 @@ nav.scrolled {
 
 /* ── Sections ── */
 section { padding: 7rem 4rem; }
-.section-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+.section-label { font-size: 20px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
 .section-title {
   font-family: var(--serif);
   font-size: clamp(2.5rem, 5vw, 4.5rem);
@@ -322,7 +322,7 @@ strong { color: var(--text); font-weight: 500; }
 .lightbox-close:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
 
 /* ── Extracurriculars ── */
-#extracurriculars { padding: 3rem 0 0; }
+#extracurriculars {border-top: 1px solid var(--border);  padding: 3rem 0 0; }
 .project-footer { margin-top: auto; padding-top: 2rem; }
 .chapter { padding: 3rem 4rem; }
 .extra-intro-block {
