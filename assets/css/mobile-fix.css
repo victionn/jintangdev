@@ -1,0 +1,72 @@
+/* =============================================================
+   mobile-fix.css
+   Add AFTER main.css:
+   <link rel="stylesheet" href="assets/css/mobile-fix.css">
+
+   DESKTOP is completely untouched — every rule here is
+   wrapped in a max-width media query.
+   ============================================================= */
+
+/* ── ≤ 900px: fix project-media row (existing breakpoint missed this) ── */
+@media (max-width: 900px) {
+
+  /* The outer card stacks already via main.css, but
+     the inner media row was never fixed — video stays
+     720 px wide and pushes off-screen */
+  .project-media {
+    flex-direction: column;
+  }
+
+  /* 720px hardcoded width → full width */
+  .project-media .project-visual {
+    width: 100%;
+  }
+
+  /* Fixed 405px / 300px height hides images on narrow screens */
+  .project-images {
+    height: auto;
+    /* keep the 2×2 grid but let rows be naturally tall */
+    grid-template-rows: auto auto;
+  }
+
+  .project-img-item img {
+    /* object-fit: cover needs an explicit height to work;
+       140px keeps the grid compact but fully visible */
+    height: 140px;
+  }
+
+  /* Inline flex-direction:row on project cards 02 & 03 —
+     !important is the only way to beat an inline style */
+  .project-card {
+    flex-direction: column !important;
+  }
+
+  /* The gif/screenshot images inside those cards */
+  .project-gif {
+    width: 100%     !important;
+    max-width: 100% !important;
+    align-self: stretch !important;
+    margin-top: 0   !important;
+  }
+
+  /* Prevent scale(2) hover from overflowing on touch screens
+     (touch hover state sticks and the photo blows up) */
+  .chapter-photo:hover {
+    transform: rotate(var(--rot, 0deg)) translateY(var(--lift, 0px)) !important;
+    z-index: 1 !important;
+  }
+}
+
+/* ── ≤ 600px: small phones ── */
+@media (max-width: 600px) {
+
+  /* Stack the two-column image grid to one column on tiny screens */
+  .project-images {
+    grid-template-columns: 1fr;
+  }
+
+  /* Give the chapter-photo row a little breathing room */
+  .chapter-photos {
+    gap: 0.75rem;
+  }
+}
