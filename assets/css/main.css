@@ -35,25 +35,8 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: #ccc; }
 
-* { cursor: none !important; }
-#cursor {
-  position: fixed; z-index: 9999;
-  width: 9px; height: 9px;
-  background: var(--text);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%,-50%);
-  transition: transform 0.15s ease, width 0.2s, height 0.2s;
-}
-#cursor-ring {
-  position: fixed; z-index: 9998;
-  width: 38px; height: 38px;
-  border: 1px solid rgba(0,0,0,0.18);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%,-50%);
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
-}
+
+
 body.hovering #cursor { width: 5px; height: 5px; }
 body.hovering #cursor-ring { width: 54px; height: 54px; border-color: rgba(0,0,0,0.45); }
 
