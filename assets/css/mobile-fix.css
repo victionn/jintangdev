@@ -29,12 +29,11 @@
     grid-template-rows: auto auto;
   }
 
-  .project-img-item img {
-    /* object-fit: cover needs an explicit height to work;
-       140px keeps the grid compact but fully visible */
-    height: 140px;
+.project-img-item img {
+    height: auto;
+    object-fit: contain;
+    background: var(--surface);
   }
-
   /* Inline flex-direction:row on project cards 02 & 03 —
      !important is the only way to beat an inline style */
   .project-card {
