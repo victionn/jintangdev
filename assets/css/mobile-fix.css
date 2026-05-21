@@ -42,6 +42,7 @@
 
   /* The gif/screenshot images inside those cards */
   .project-gif {
+    
     width: 100%     !important;
     max-width: 100% !important;
     align-self: stretch !important;
