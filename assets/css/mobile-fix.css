@@ -36,20 +36,25 @@
   }
   /* Inline flex-direction:row on project cards 02 & 03 —
      !important is the only way to beat an inline style */
-  .project-card {
+.project-card--main {
     flex-direction: column !important;
-  }
+}
 
-  /* The gif/screenshot images inside those cards */
-  .project-gif {
-
-
-    
-    width: 100%     !important;
-    max-width: 100% !important;
-    align-self: stretch !important;
+/* Cap the gif/image so it doesn't balloon when the card narrows */
+.project-gif {
+    width: 160px    !important;
+    max-width: 160px !important;
+    flex-shrink: 0  !important;
+    align-self: flex-start !important;
     margin-top: 0   !important;
-  }
+}
+
+/* Cap extracurricular videos so they don't go full-bleed */
+.chapter-visual--video {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+}
 
   /* Prevent scale(2) hover from overflowing on touch screens
      (touch hover state sticks and the photo blows up) */
