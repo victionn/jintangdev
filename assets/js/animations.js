@@ -342,18 +342,44 @@
         const src = orbit.getAttribute('data-src');
         if (reducedMotion || typeof fetch !== 'function') {
           // static face frame; no scrubbing
-          orbit.src = src;
           orbit.addEventListener('loadedmetadata', function () { orbit.currentTime = 0.05; });
+          orbit.preload = 'metadata';
+          orbit.src = src;
+          orbit.load();
         } else {
+          // Arm exactly once, from whichever signal fires first — Safari/iPad
+          // is unreliable about which of these actually happens.
+          let armed = false;
+          const arm = function () {
+            if (armed) return true;
+            orbitDur = orbit.duration || 0;
+            if (!(orbitDur > 0)) return false;
+            armed = true;
+            onScroll();
+            requestAnimationFrame(orbitLoop);
+            return true;
+          };
           fetch(src)
             .then(function (res) { return res.blob(); })
             .then(function (blob) {
+              orbit.addEventListener('loadedmetadata', arm);
+              orbit.addEventListener('loadeddata', arm);
+              orbit.addEventListener('canplay', arm);
+              orbit.preload = 'auto';
               orbit.src = URL.createObjectURL(blob);
-              orbit.addEventListener('loadedmetadata', function () {
-                orbitDur = orbit.duration || 0;
-                onScroll();
-                requestAnimationFrame(orbitLoop);
-              });
+              orbit.load();
+              // iOS: a video that has never played may refuse to decode or
+              // paint seeked frames — prime it with a muted play-then-pause
+              // (allowed without a gesture for muted playsinline video)
+              const playAttempt = orbit.play();
+              if (playAttempt && playAttempt.then) {
+                playAttempt.then(function () { orbit.pause(); arm(); }).catch(function () {});
+              }
+              // last-resort poll in case no media event ever fires
+              let tries = 0;
+              const iv = setInterval(function () {
+                if (arm() || ++tries > 40) clearInterval(iv);
+              }, 250);
             })
             .catch(function (err) { console.error('[orbit]', err); });
         }
