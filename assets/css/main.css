@@ -17,11 +17,15 @@
   --surface-2: rgba(255, 255, 255, 0.065);
   --border: rgba(255, 255, 255, 0.09);
   --border-strong: rgba(255, 255, 255, 0.18);
-  --text: #f5f5f6;
-  --muted: #a6a6b0;
-  --faint: #74747e;
+  --text: #f7f7f8;
+  --muted: #bcbcc6;   /* body copy — brightened for contrast on near-black */
+  --faint: #8f8f9b;   /* labels/annotations — brightened for contrast */
   --green: #4ade80;
-  --chroma: linear-gradient(100deg, #ff8080, #80ffb8, #80b8ff);
+  --chroma: linear-gradient(100deg, #7dd3fc, #93c5fd, #a5b4fc);
+  /* mirrored stops so the shimmer sweep loops without a visible jump;
+     the narrow white stop is the travelling glint */
+  --chroma-flow: linear-gradient(110deg,
+    #67c4f4 0%, #8aa5fd 38%, #ffffff 50%, #8aa5fd 62%, #67c4f4 100%);
   --sans: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
   --serif: 'Instrument Serif', Georgia, serif;
   --mono: 'JetBrains Mono', 'Courier New', monospace;
@@ -37,7 +41,7 @@ body {
   color: var(--text);
   font-family: var(--mono);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400; /* 300 reads too thin on dark backgrounds */
   line-height: 1.7;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -96,24 +100,17 @@ img, video, iframe { max-width: 100%; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── Custom cursor (fine pointers only; native cursor kept) ── */
-#cursor, #cursor-ring {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  pointer-events: none; border-radius: 50%;
-  transform: translate(-50%, -50%);
+/* ── Animated GIF cursor: JS glues #cursor-fx to the pointer and adds
+   .gif-cursor to <html>; the native cursor is hidden only then, so
+   no-JS / touch / reduced-motion users keep normal system cursors. ── */
+#cursor-fx {
+  position: fixed; top: 0; left: 0; z-index: 99999;
+  pointer-events: none;
   display: none;
+  will-change: transform;
 }
-#cursor { width: 6px; height: 6px; background: var(--text); }
-#cursor-ring {
-  width: 36px; height: 36px;
-  border: 1px solid rgba(255,255,255,0.28);
-  transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out), border-color 0.25s;
-}
-body.hovering #cursor { width: 4px; height: 4px; }
-body.hovering #cursor-ring { width: 58px; height: 58px; border-color: rgba(255,255,255,0.55); }
-@media (hover: hover) and (pointer: fine) {
-  #cursor, #cursor-ring { display: block; }
-}
+#cursor-fx img { width: 32px; height: 32px; display: block; }
+html.gif-cursor, html.gif-cursor * { cursor: none !important; }
 
 /* ── Scroll progress hairline ── */
 #scroll-progress {
@@ -198,6 +195,13 @@ nav.scrolled .nav-links {
   max-width: 920px;
   will-change: transform, opacity;
 }
+/* soft scrim so text reads over bright aurora passes */
+.hero-inner::before {
+  content: '';
+  position: absolute; inset: -4rem -6rem; z-index: -1;
+  background: radial-gradient(ellipse 55% 52% at 50% 48%, rgba(6, 6, 7, 0.55), transparent 74%);
+  pointer-events: none;
+}
 
 .hero-eyebrow {
   display: flex; align-items: center; gap: 0.9rem;
@@ -220,15 +224,14 @@ nav.scrolled .nav-links {
   margin-top: 1.8rem;
 }
 .hero-title em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  background: var(--chroma);
+  font-style: normal; /* accent via gradient only, same face as the rest */
+  background: var(--chroma-flow);
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   padding-right: 0.06em;
+  animation: emShimmer 2.8s ease-in-out infinite alternate;
 }
 .wave {
   display: inline-block;
@@ -394,10 +397,12 @@ section { padding: 8rem var(--pad-x); position: relative; }
   color: var(--text);
 }
 .section-title em {
-  font-family: var(--serif); font-style: italic; font-weight: 400;
-  background: var(--chroma);
+  font-style: normal; /* accent via gradient only, same face as the rest */
+  background: var(--chroma-flow);
+  background-size: 300% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
   padding-right: 0.06em;
+  animation: emShimmer 2.8s ease-in-out infinite alternate;
 }
 .section-title--xl { font-size: clamp(3rem, 7vw, 6rem); }
 
@@ -647,6 +652,8 @@ section { padding: 8rem var(--pad-x); position: relative; }
   border-radius: 8px;
   transition: transform 0.5s var(--ease-out);
 }
+/* tall portrait screenshots (e.g. phone apps) */
+.project-thumb--tall img { max-height: 240px; }
 .stack-card:hover .project-thumb img,
 .project-card--main:hover .project-thumb img { transform: scale(1.03); }
 
@@ -689,7 +696,7 @@ section { padding: 8rem var(--pad-x); position: relative; }
 .video-showcase:hover .video-overlay { opacity: 1; }
 .video-unmute-btn {
   background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
-  color: #fff; width: 34px; height: 34px; cursor: pointer;
+  color: #fff; width: 34px; height: 34px;
   display: flex; align-items: center; justify-content: center;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -700,7 +707,7 @@ section { padding: 8rem var(--pad-x); position: relative; }
   position: absolute; top: 50%; left: 50%; z-index: 2;
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
-  color: #fff; width: 56px; height: 56px; cursor: pointer;
+  color: #fff; width: 56px; height: 56px;
   display: flex; align-items: center; justify-content: center;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -735,7 +742,6 @@ section { padding: 8rem var(--pad-x); position: relative; }
   background: none; border: 1px solid rgba(255, 255, 255, 0.3);
   color: #fff; font-size: 1rem;
   width: 44px; height: 44px; border-radius: 50%;
-  cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
@@ -784,11 +790,15 @@ section { padding: 8rem var(--pad-x); position: relative; }
 }
 .chapter-rail-num {
   font-family: var(--serif); font-style: italic;
-  font-size: 4.5rem; line-height: 0.9;
+  font-size: 4.5rem; line-height: 1;
   letter-spacing: -0.04em;
   background: var(--chroma);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   opacity: 0.9;
+  /* italic glyphs overhang the box; pad the paint area so
+     background-clip:text doesn't shave the edges, then pull layout back */
+  padding: 0.1em 0.15em;
+  margin: -0.1em -0.15em;
 }
 .chapter-rail-track {
   width: 1px; height: 90px;
@@ -817,7 +827,7 @@ section { padding: 8rem var(--pad-x); position: relative; }
   color: var(--text); margin-bottom: 1.25rem;
 }
 .chapter-title em {
-  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-style: normal;
   color: var(--muted);
 }
 .chapter-meta {
@@ -923,7 +933,7 @@ section { padding: 8rem var(--pad-x); position: relative; }
   width: 900px; height: 500px;
   transform: translateX(-50%);
   background: radial-gradient(ellipse at center,
-              rgba(128, 184, 255, 0.08), rgba(128, 255, 184, 0.05) 40%, transparent 70%);
+              rgba(125, 211, 252, 0.08), rgba(165, 180, 252, 0.05) 40%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1040,6 +1050,10 @@ footer {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+@keyframes emShimmer {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
 
 /* Scroll reveals — blur-up + rise (JS adds .visible) */
 .reveal {
@@ -1070,7 +1084,6 @@ footer {
   .st .wi { transform: none; }
   .scroll-words .sw { opacity: 1; }
   .tech-track, .connect-track { animation: none; }
-  #cursor, #cursor-ring { display: none; }
 }
 
 /* ═══════════════════ RESPONSIVE ═══════════════════ */
@@ -1103,6 +1116,7 @@ footer {
   .stack-card-inner { flex-direction: column; gap: 1.6rem; }
   .stack-card .project-thumb { width: 100%; }
   .stack-card .project-thumb img { max-height: 220px; }
+  .stack-card .project-thumb--tall img { max-height: 200px; }
 
   .extra-intro-block { grid-template-columns: 1fr; gap: 2rem; }
   .extra-intro { justify-self: start; }

@@ -176,28 +176,27 @@
       });
     });
 
-    /* ── Custom cursor ── */
+    /* ── Animated GIF cursor overlay (assets/cursor/blue.gif) ── */
     safe(function () {
-      if (!finePointer) return;
-      const cursor = document.getElementById('cursor');
-      const ring = document.getElementById('cursor-ring');
-      let mx = window.innerWidth / 2, my = vh() / 2;
-      let rx = mx, ry = my;
+      if (!finePointer || reducedMotion) return;
+      const fx = document.getElementById('cursor-fx');
+      if (!fx) return;
+      document.documentElement.classList.add('gif-cursor');
+      let shown = false;
       document.addEventListener('mousemove', function (e) {
-        mx = e.clientX; my = e.clientY;
-        cursor.style.left = mx + 'px';
-        cursor.style.top = my + 'px';
+        // offset so the artwork's pointer tip (~9,4 in the 32px image) sits on the hotspot
+        fx.style.transform = 'translate3d(' + (e.clientX - 9) + 'px,' + (e.clientY - 4) + 'px,0)';
+        if (!shown) { fx.style.display = 'block'; shown = true; }
+      }, { passive: true });
+      document.documentElement.addEventListener('mouseleave', function () {
+        fx.style.display = 'none'; shown = false;
       });
-      (function animRing() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
-        ring.style.left = rx + 'px';
-        ring.style.top = ry + 'px';
-        requestAnimationFrame(animRing);
-      })();
-      document.querySelectorAll('a, button, .stack-card, .project-card--main, .chapter-photo, .stat').forEach(function (el) {
-        el.addEventListener('mouseenter', function () { document.body.classList.add('hovering'); });
-        el.addEventListener('mouseleave', function () { document.body.classList.remove('hovering'); });
+      // iframes (YouTube embed) paint their own cursor — hide the overlay there
+      document.querySelectorAll('iframe').forEach(function (fr) {
+        const host = fr.parentElement;
+        if (!host) return;
+        host.addEventListener('mouseenter', function () { fx.style.display = 'none'; });
+        host.addEventListener('mouseleave', function () { if (shown) fx.style.display = 'block'; });
       });
     });
 

@@ -33,8 +33,7 @@
 </svg>
 
 <div id="grain" aria-hidden="true"></div>
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+<div id="cursor-fx" aria-hidden="true"><img src="assets/cursor/blue.gif" alt=""></div>
 <div id="scroll-progress"></div>
 
 <nav id="nav">
@@ -60,7 +59,7 @@
 
     <div class="hero-status">
       <span class="status-ping"><span class="status-ping-ring"></span><span class="status-ping-dot"></span></span>
-      <p>Open to part-time &amp; grad roles</p>
+      <p>Open to new opportunities!</p>
     </div>
 
     <div class="hero-cta">
@@ -92,7 +91,7 @@
 <section id="about">
   <div class="section-head">
     <p class="section-label reveal">01 — About</p>
-    <h2 class="section-title st">The person <em>behind the code</em></h2>
+    <h2 class="section-title st">Quantified <em>Me</em></h2>
   </div>
 
   <div class="about-inner">
@@ -100,26 +99,27 @@
       <div class="photo-frame">
         <img src="assets/images/jintang.png?v=2" alt="Jintang Zhao">
       </div>
-      <span class="photo-tag">Jintang Zhao · USYD</span>
+
     </div>
 
     <div class="about-stats">
-      <p class="stats-kicker reveal">By the numbers</p>
+
       <div class="stats-grid">
+
         <div class="stat reveal">
-          <span class="stat-num" data-count="2000" data-prefix="~" data-suffix="%">~2000%</span>
-          <span class="stat-label">ROI — deployed trading algorithm</span>
+          <span class="stat-num" data-count="80">80</span>
+          <span class="stat-label">Weighted Average Mark</span>
         </div>
         <div class="stat reveal">
-          <span class="stat-num" data-count="30" data-suffix="ms">30ms</span>
-          <span class="stat-label">Avg transaction time, RPC racing</span>
+          <span class="stat-num" data-count="2000" data-prefix="~" data-suffix="%">~2000%</span>
+          <span class="stat-label">Return on investment from my deployed trading algorithm</span>
         </div>
         <div class="stat reveal">
           <span class="stat-num" data-count="4">4</span>
           <span class="stat-label">E-sports world records</span>
         </div>
         <div class="stat reveal">
-          <span class="stat-num" data-count="200000">200,000</span>
+          <span class="stat-num" data-count="230000">230,000</span>
           <span class="stat-label">Accumulated YouTube views</span>
         </div>
       </div>
@@ -226,14 +226,14 @@
       </div>
       <div class="project-images">
         <div class="project-img-item wipe"><img src="assets/images/project1-1.png" alt="Screenshot 1"></div>
-        <div class="project-img-item wipe"><img src="assets/images/project1-2.png" alt="Screenshot 2"></div>
+        <div class="project-img-item wipe"><img src="assets/images/project1-5.png" alt="Screenshot 2"></div>
         <div class="project-img-item wipe"><img src="assets/images/project1-3.png" alt="Screenshot 3"></div>
         <div class="project-img-item wipe"><img src="assets/images/project1-4.png" alt="Screenshot 4"></div>
       </div>
     </div>
   </article>
 
-  <!-- Projects 02–05: sticky stacking deck -->
+  <!-- Projects 02–06: sticky stacking deck -->
   <div class="stack-deck" id="stack-deck">
 
     <article class="stack-card glow-card">
@@ -241,18 +241,14 @@
         <div class="project-info">
           <p class="project-number">Project 02</p>
           <div class="project-tags">
-            <span class="tag">JavaScript</span>
-            <span class="tag">Chrome Extension</span>
-            <span class="tag">LLM API</span>
-            <span class="tag">REST APIs</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Supabase</span>
+            <span class="tag">Docker</span> 
           </div>
-          <h3 class="project-title">Crypto Sentiment Bot</h3>
-          <p class="project-desc">Chrome extension that fetches live news from CryptoCompare and market data from CoinGecko for any token, then runs Claude LLM analysis to produce a real-time bullish/bearish sentiment score (0–100) with confidence rating, key signal breakdown, and per-article sentiment scoring.</p>
-          <div class="project-footer">
-            <a href="https://github.com/victionn/crypto-sentiment" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
-          </div>
+          <h3 class="project-title">Cover</h3>
+          <p class="project-desc">Cover is a mobile marketplace that connects hospitality workers with venues and private events, letting venues post temporary and permanent job openings while workers browse, search, and apply for them, including via a map view of nearby gigs.</p>
         </div>
-        <div class="project-thumb"><img src="assets/images/sentiment-bot.png" alt="Crypto Sentiment Bot demo"></div>
+        <div class="project-thumb project-thumb--tall"><img src="assets/images/cover.png" alt="Cover app screenshot"></div>
       </div>
     </article>
 
@@ -297,6 +293,26 @@
       <div class="stack-card-inner">
         <div class="project-info">
           <p class="project-number">Project 05</p>
+          <div class="project-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Chrome Extension</span>
+            <span class="tag">LLM API</span>
+            <span class="tag">REST APIs</span>
+          </div>
+          <h3 class="project-title">Crypto Sentiment Bot</h3>
+          <p class="project-desc">Chrome extension that fetches live news from CryptoCompare and market data from CoinGecko for any token, then runs Claude LLM analysis to produce a real-time bullish/bearish sentiment score (0–100) with confidence rating, key signal breakdown, and per-article sentiment scoring.</p>
+          <div class="project-footer">
+            <a href="https://github.com/victionn/crypto-sentiment" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="project-thumb"><img src="assets/images/sentiment-bot.png" alt="Crypto Sentiment Bot demo"></div>
+      </div>
+    </article>
+
+    <article class="stack-card glow-card">
+      <div class="stack-card-inner">
+        <div class="project-info">
+          <p class="project-number">Project 06</p>
           <div class="project-tags">
             <span class="tag">C</span>
             <span class="tag">Bash</span>
@@ -505,7 +521,7 @@
       </div>
       <div class="contact-note reveal">
         <span class="status-ping"><span class="status-ping-ring"></span><span class="status-ping-dot"></span></span>
-        <p>I'm currently open to part time and grad roles, or interesting projects. Feel free to reach out!</p>
+        <p>I'm currently open to new opportunities. Feel free to reach out!</p>
       </div>
     </div>
   </div>

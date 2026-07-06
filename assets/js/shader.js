@@ -17,28 +17,77 @@
     }
   `;
 
+  /* Aurora curtains: layered fbm noise builds swaying curtains of light
+     with fine vertical rays, tinted sky-blue -> periwinkle to match the
+     site's ice theme. */
   const FRAG = `
     precision highp float;
     uniform vec2 resolution;
     uniform float time;
-    uniform float xScale;
-    uniform float yScale;
-    uniform float distortion;
+
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+    }
+    float noise(vec2 p) {
+      vec2 i = floor(p), f = fract(p);
+      vec2 u = f * f * (3.0 - 2.0 * f);
+      return mix(mix(hash(i),                   hash(i + vec2(1.0, 0.0)), u.x),
+                 mix(hash(i + vec2(0.0, 1.0)),  hash(i + vec2(1.0, 1.0)), u.x), u.y);
+    }
+    float fbm(vec2 p) {
+      float v = 0.0;
+      float a = 0.5;
+      for (int i = 0; i < 3; i++) {
+        v += a * noise(p);
+        p = p * 2.03 + vec2(11.7, 5.3);
+        a *= 0.5;
+      }
+      return v;
+    }
 
     void main() {
       vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+      float t = time;
 
-      float d = length(p) * distortion;
+      vec3 col = vec3(0.008, 0.010, 0.022); // near-black blue night sky
 
-      float rx = p.x * (1.0 + d);
-      float gx = p.x;
-      float bx = p.x * (1.0 - d);
+      for (int i = 0; i < 3; i++) {
+        float fi = float(i);
+        float speed = 0.22 + fi * 0.11;
+        float off = fi * 9.17;
 
-      float r = 0.05 / abs(p.y + sin((rx + time) * xScale) * yScale);
-      float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);
-      float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);
+        // curtains bend: x warped by y-dependent drifting noise
+        float sway = (fbm(vec2(p.y * 0.9 + off, t * speed)) - 0.5) * 1.2;
+        float x = p.x * (1.3 + fi * 0.25) + sway + off;
 
-      gl_FragColor = vec4(r, g, b, 1.0);
+        // the curtain folds (bright/dark columns)
+        float fold = fbm(vec2(x * 1.8, t * speed * 0.7 + off));
+        float curtain = pow(smoothstep(0.32, 0.78, fold), 1.6);
+
+        // fine vertical rays shimmering inside each curtain
+        float rays = 0.6 + 0.5 * noise(vec2(x * 22.0, t * speed * 2.0));
+        curtain *= rays;
+
+        // vertical placement of the band, slowly drifting per layer
+        float cy = 0.05 + (fbm(vec2(x * 0.6, t * 0.18 + off)) - 0.5) * 1.1;
+        float band = exp(-pow((p.y - cy) * (1.2 + fi * 0.35), 2.0));
+
+        float g = curtain * band * (1.5 - fi * 0.35);
+
+        vec3 tint = mix(vec3(0.49, 0.83, 0.99),   // sky   #7dd3fc
+                        vec3(0.65, 0.71, 0.99),   // peri  #a5b4fc
+                        0.5 + 0.5 * sin(fi * 2.1 + p.y * 1.5 + t * 0.15));
+        col += g * tint;
+      }
+
+      // faint ambient glow high in the "sky"
+      col += vec3(0.05, 0.09, 0.16) * exp(-pow((p.y - 0.55) * 1.4, 2.0)) * 0.35;
+
+      // calm the center so hero text stays readable; edges keep full glow
+      float cd = length(p * vec2(0.75, 0.95));
+      col *= 0.35 + 0.65 * smoothstep(0.1, 1.05, cd);
+
+      gl_FragColor = vec4(col, 1.0);
     }
   `;
 
@@ -77,11 +126,8 @@
 
   const uResolution = gl.getUniformLocation(program, 'resolution');
   const uTime       = gl.getUniformLocation(program, 'time');
-  gl.uniform1f(gl.getUniformLocation(program, 'xScale'), 1.0);
-  gl.uniform1f(gl.getUniformLocation(program, 'yScale'), 0.5);
-  gl.uniform1f(gl.getUniformLocation(program, 'distortion'), 0.05);
 
-  let time = 0;
+  let time = 30; // start mid-flow so the first (or reduced-motion) frame shows developed curtains
   let rafId = null;
   let inView = true;
 
