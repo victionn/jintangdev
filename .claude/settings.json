@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --check assets/js/shader.js)",
+      "Bash(node --check assets/js/animations.js)",
+      "Bash(node --check assets/js/projects.js)",
+      "Bash(node test.js)",
+      "Bash(node -e \"const j=require\\('jsdom'\\); console.log\\(Object.keys\\(j\\)\\); console.log\\(require\\('./node_modules/jsdom/package.json'\\).version\\)\")",
+      "Bash(node --check c:/Users/jinta/Desktop/dev/assets/js/animations.js)",
+      "Bash(py -c \"from pathlib import Path; d=Path\\('assets/images/jintang.png'\\).read_bytes\\(\\)[:12]; print\\(d.hex\\(\\)\\)\")",
+      "Bash(npm i *)",
+      "Bash(npx playwright *)"
+    ]
+  }
+}
