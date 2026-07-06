@@ -308,6 +308,57 @@
       const heroInner = document.getElementById('hero-inner');
       const deckCards = Array.prototype.slice.call(document.querySelectorAll('.stack-card'));
       deckCards.forEach(function (c, i) { c.style.setProperty('--stack-i', String(i)); });
+      /* 360° orbit video in About — scrubbed by scroll position.
+         The clip starts/ends on the face with the back at BACK_AT seconds,
+         so: section entering = back, section centered = face (seam crossing
+         is invisible), section leaving = back again.
+         Loaded as a blob: servers without HTTP Range support can't seek
+         streamed video at all, and in-memory data makes seeks instant.
+         A dedicated eased loop glides the playhead toward the scroll target
+         so the rotation is smooth rather than stepping with scroll events. */
+      const aboutSec = document.getElementById('about');
+      const orbit = document.getElementById('about-orbit');
+      const BACK_AT = 5;
+      let orbitDur = 0;
+      let orbitTarget = -1; // time the scroll position asks for
+      let orbitCur = -1;    // eased playhead chasing the target
+
+      function orbitLoop() {
+        if (orbitTarget >= 0 && orbitDur > 0) {
+          if (orbitCur < 0) orbitCur = orbitTarget;
+          // ease along the shortest cyclic path (the clip loops seamlessly)
+          let delta = orbitTarget - orbitCur;
+          if (delta > orbitDur / 2) delta -= orbitDur;
+          if (delta < -orbitDur / 2) delta += orbitDur;
+          orbitCur = (orbitCur + delta * 0.16 + orbitDur) % orbitDur;
+          if (!orbit.seeking && Math.abs(orbit.currentTime - orbitCur) > 0.02) {
+            orbit.currentTime = orbitCur;
+          }
+        }
+        requestAnimationFrame(orbitLoop);
+      }
+
+      if (orbit) {
+        const src = orbit.getAttribute('data-src');
+        if (reducedMotion || typeof fetch !== 'function') {
+          // static face frame; no scrubbing
+          orbit.src = src;
+          orbit.addEventListener('loadedmetadata', function () { orbit.currentTime = 0.05; });
+        } else {
+          fetch(src)
+            .then(function (res) { return res.blob(); })
+            .then(function (blob) {
+              orbit.src = URL.createObjectURL(blob);
+              orbit.addEventListener('loadedmetadata', function () {
+                orbitDur = orbit.duration || 0;
+                onScroll();
+                requestAnimationFrame(orbitLoop);
+              });
+            })
+            .catch(function (err) { console.error('[orbit]', err); });
+        }
+      }
+
       const chapters = Array.prototype.slice.call(document.querySelectorAll('.chapter'));
       const chapterPhotos = Array.prototype.slice.call(document.querySelectorAll('.chapter-photo'));
       const marqueeOuters = Array.prototype.slice.call(document.querySelectorAll('.tech-track-outer, .connect-marquee'));
@@ -350,6 +401,23 @@
             const localOverlap = overlap / scale;
             deckCards[i].style.clipPath =
               'inset(-80px -40px ' + (localOverlap - 2).toFixed(1) + 'px -40px round 20px)';
+          }
+
+          /* Scrub target for the About orbit video: back → face → back.
+             The eased orbitLoop chases this; we only compute it here. */
+          if (orbit && orbitDur > 0 && aboutSec) {
+            const r = aboutSec.getBoundingClientRect();
+            if (r.bottom > -200 && r.top < h + 200) {
+              const p = clamp((h - r.top) / (h + Math.max(r.height, 1)), 0, 1);
+              const back = Math.min(BACK_AT, orbitDur - 0.05);
+              let t;
+              if (p < 0.5) {
+                t = back + (orbitDur - back) * (p / 0.5);   // back → face (end)
+              } else {
+                t = back * ((p - 0.5) / 0.5);               // face (start) → back
+              }
+              orbitTarget = clamp(t, 0, orbitDur - 0.05);
+            }
           }
 
           /* Scroll-driven word highlight */

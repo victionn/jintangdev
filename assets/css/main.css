@@ -445,12 +445,15 @@ section { padding: 8rem var(--pad-x); position: relative; }
   opacity: 0.35;
   filter: blur(22px);
 }
-.photo-frame img {
+.photo-frame img,
+.photo-frame video {
   width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
-  object-position: center top;  /* keep the top of the head in frame */
+  object-position: center top;  /* photo: keep the top of the head in frame */
   border-radius: calc(var(--radius) - 8px);
   display: block;
 }
+/* the orbit video composes the face lower in frame — crop from the bottom */
+.photo-frame video { object-position: center 40%; }
 .photo-tag {
   position: absolute; bottom: -14px; left: 50%;
   transform: translateX(-50%);

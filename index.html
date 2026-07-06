@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <!-- bump ?v= whenever css/js change so browsers can't serve stale copies -->
-  <link rel="stylesheet" href="assets/css/main.css?v=5">
+  <link rel="stylesheet" href="assets/css/main.css?v=7">
 </head>
 <body class="loading">
 
@@ -99,7 +99,8 @@
   <div class="about-inner">
     <div class="about-photo reveal" id="about-photo">
       <div class="photo-frame">
-        <img src="assets/images/jintang.png?v=2" alt="Jintang Zhao">
+        <video id="about-orbit" data-src="assets/videos/orbit.mp4" muted playsinline preload="none"
+               poster="assets/images/jintang.png?v=2" aria-label="360° view of Jintang Zhao"></video>
       </div>
 
     </div>
@@ -549,7 +550,7 @@
 
 <script src="assets/js/shader.js?v=3" defer></script>
 <script src="assets/js/starfield.js?v=2" defer></script>
-<script src="assets/js/animations.js?v=10" defer></script>
+<script src="assets/js/animations.js?v=12" defer></script>
 <script src="assets/js/projects.js?v=3" defer></script>
 </body>
 </html>
