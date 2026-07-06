@@ -92,6 +92,15 @@ img, video, iframe { max-width: 100%; }
 }
 @keyframes prePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
+/* ── Starfield backdrop (painted by starfield.js) ──
+   Negative z-index sits above the body background (which propagates to the
+   root) but below all content — the whole page floats over a night sky. */
+#bg-stars {
+  position: fixed; inset: 0; z-index: -1;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
 /* ── Film grain ── */
 #grain {
   position: fixed; inset: -100px; z-index: 9000;
@@ -625,7 +634,10 @@ section { padding: 8rem var(--pad-x); position: relative; }
 .stack-card {
   position: sticky;
   top: calc(90px + var(--stack-i, 0) * 16px);
-  background: var(--bg-solid);           /* solid — cards overlap */
+  /* same clear glass as the featured card (no backdrop blur — it would smear
+     the stars). Covered cards fully dissolve via the JS opacity fade, so
+     nothing legible sits behind the glass at rest. */
+  background: var(--surface);
   box-shadow: 0 -20px 60px -30px rgba(0, 0, 0, 0.9);
   transform-origin: center top;
   will-change: transform, filter;
@@ -1080,6 +1092,9 @@ footer {
   }
   #preloader { display: none; }
   body.loading { overflow: auto; }
+  /* without the JS dissolve, covered stack cards would ghost through the
+     clear glass — make them opaque for reduced-motion users */
+  .stack-card { background: var(--bg-solid); }
   .hero-eyebrow, .hero-sub, .hero-status, .hero-cta,
   .hero-socials, .scroll-hint { opacity: 1; transform: none; }
   .reveal { opacity: 1; transform: none; filter: none; }

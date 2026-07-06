@@ -332,13 +332,24 @@
             heroInner.style.opacity = clamp(1 - sy / (h * 0.85), 0, 1);
           }
 
-          /* Stack deck: previous card recedes as next covers it */
+          /* Stack deck: every card is clear glass at all times (stars always
+             visible through it). Whatever part of a card the next card
+             covers is clipped away in the same frame, so nothing ever ghosts
+             through the glass above. The clip distance is converted into the
+             card's own (scaled) coordinate space — computing it in screen
+             pixels would leave a strip of the buried card peeking through
+             near the covering card's top edge. */
           for (let i = 0; i < deckCards.length - 1; i++) {
             const cr = deckCards[i].getBoundingClientRect();
             const nr = deckCards[i + 1].getBoundingClientRect();
-            const p = clamp((cr.bottom - nr.top) / Math.max(cr.height, 1), 0, 1);
-            deckCards[i].style.transform = 'scale(' + (1 - p * 0.05) + ')';
+            const overlap = Math.max(0, cr.bottom - nr.top);
+            const p = clamp(overlap / Math.max(cr.height, 1), 0, 1);
+            const scale = 1 - p * 0.05;
+            deckCards[i].style.transform = 'scale(' + scale + ')';
             deckCards[i].style.filter = 'brightness(' + (1 - p * 0.35) + ')';
+            const localOverlap = overlap / scale;
+            deckCards[i].style.clipPath =
+              'inset(-80px -40px ' + (localOverlap - 2).toFixed(1) + 'px -40px round 20px)';
           }
 
           /* Scroll-driven word highlight */
