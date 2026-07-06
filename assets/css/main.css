@@ -236,7 +236,7 @@ nav.scrolled .nav-links {
 .wave {
   display: inline-block;
   transform-origin: 70% 70%;
-  animation: wave 2.4s ease 1.6s 2;
+  animation: wave 2.6s ease 1.6s infinite;
 }
 
 .hero-sub {
@@ -1039,12 +1039,14 @@ footer {
 @keyframes fadeIn { to { opacity: 1; } }
 @keyframes ping { 75%, 100% { transform: scale(2.1); opacity: 0; } }
 @keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  15% { transform: rotate(16deg); }
-  30% { transform: rotate(-7deg); }
-  45% { transform: rotate(14deg); }
-  60% { transform: rotate(-4deg); }
-  75% { transform: rotate(9deg); }
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(16deg); }
+  20% { transform: rotate(-7deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(9deg); }
+  /* rest for the back half of each cycle so it doesn't feel frantic */
+  60%, 100% { transform: rotate(0deg); }
 }
 @keyframes marquee {
   from { transform: translateX(0); }

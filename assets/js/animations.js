@@ -38,15 +38,20 @@
     document.body.classList.remove('loading');
     initSite();
   } else {
-    let n = 0;
-    const timer = setInterval(function () {
-      n = Math.min(100, n + Math.ceil(Math.random() * 14) + 6);
-      preCount.textContent = n;
-      if (n >= 100) {
-        clearInterval(timer);
-        setTimeout(function () { endPreloader(false); }, 180);
+    // Count is driven by elapsed time (not timer ticks), so the duration is
+    // exact and immune to background-tab timer throttling. ~1.1s of counting
+    // + 0.2s beat + 0.75s slide-up ≈ 2s of preloader total.
+    const COUNT_MS = 1100;
+    const t0 = performance.now();
+    (function tick() {
+      const p = Math.min(1, (performance.now() - t0) / COUNT_MS);
+      preCount.textContent = Math.floor(p * 100);
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        setTimeout(function () { endPreloader(false); }, 200);
       }
-    }, 55);
+    })();
   }
 
   /* ════════ Split-text: wrap words of .st in masked spans ════════ */
