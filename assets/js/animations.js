@@ -15,6 +15,9 @@
     try { fn(); } catch (err) { console.error('[init]', err); }
   }
 
+
+
+  
   /* ════════ Preloader ════════ */
   const pre = document.getElementById('preloader');
   const preCount = pre ? pre.querySelector('.pre-count') : null;
