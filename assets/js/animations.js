@@ -41,15 +41,38 @@
     document.body.classList.remove('loading');
     initSite();
   } else {
-    // Count is driven by elapsed time (not timer ticks), so the duration is
-    // exact and immune to background-tab timer throttling. ~1.1s of counting
-    // + 0.2s beat + 0.75s slide-up ≈ 2s of preloader total.
-    const COUNT_MS = 1100;
+    // The count is time-driven, but the preloader only lifts once the hero
+    // is actually presentable: fonts loaded + the aurora's first frame
+    // painted (shader.js sets __auroraReady / fires 'aurora-ready').
+    // Until then the count holds at 93; MAX_WAIT caps the hold so a hung
+    // asset can never trap visitors. Deliberately NOT gated on window
+    // 'load' — that would wait on megabytes of below-fold media.
+    const COUNT_MS = 1100;  // minimum branding beat, as before
+    const MAX_WAIT = 4500;
+
+    let fontsDone = true;
+    try {
+      if (document.fonts && document.fonts.status !== 'loaded') {
+        fontsDone = false;
+        document.fonts.ready.then(function () { fontsDone = true; });
+      }
+    } catch (e) {}
+
+    // shader.js runs first (defer order) and may have announced already —
+    // hence the flag; missing canvas counts as resolved
+    let auroraDone = !!window.__auroraReady || !document.getElementById('shader-canvas');
+    document.addEventListener('aurora-ready', function () { auroraDone = true; });
+
+    let disp = 0;
     const t0 = performance.now();
     (function tick() {
-      const p = Math.min(1, (performance.now() - t0) / COUNT_MS);
-      preCount.textContent = Math.floor(p * 100);
-      if (p < 1) {
+      const el = performance.now() - t0;
+      const ready = (el >= COUNT_MS && fontsDone && auroraDone) || el >= MAX_WAIT;
+      const target = ready ? 100 : Math.min(1, el / COUNT_MS) * 93;
+      disp += (target - disp) * 0.16; // ease so the hold/catch-up reads smooth
+      if (disp > 99.2) disp = 100;
+      preCount.textContent = String(Math.floor(disp));
+      if (disp < 100) {
         requestAnimationFrame(tick);
       } else {
         setTimeout(function () { endPreloader(false); }, 200);

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <!-- bump ?v= whenever css/js change so browsers can't serve stale copies -->
-  <link rel="stylesheet" href="assets/css/main.css?v=7">
+  <link rel="stylesheet" href="assets/css/main.css?v=8">
 </head>
 <body class="loading">
 
@@ -212,7 +212,7 @@
     <div class="project-media">
       <div class="project-visual">
         <div class="video-showcase">
-          <video class="project-video" src="assets/videos/sniper-bot.mp4" autoplay muted loop playsinline></video>
+          <video class="project-video" data-src="assets/videos/sniper-bot.mp4" preload="none" muted loop playsinline></video>
           <div class="video-overlay">
             <button class="video-unmute-btn" onclick="toggleMute(this)" aria-label="Toggle sound">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -229,10 +229,10 @@
         </div>
       </div>
       <div class="project-images">
-        <div class="project-img-item wipe"><img src="assets/images/project1-1.png" alt="Screenshot 1"></div>
-        <div class="project-img-item wipe"><img src="assets/images/project1-5.png" alt="Screenshot 2"></div>
-        <div class="project-img-item wipe"><img src="assets/images/project1-3.png" alt="Screenshot 3"></div>
-        <div class="project-img-item wipe"><img src="assets/images/project1-4.png" alt="Screenshot 4"></div>
+        <div class="project-img-item wipe"><img loading="lazy" decoding="async" src="assets/images/project1-1.png" alt="Screenshot 1"></div>
+        <div class="project-img-item wipe"><img loading="lazy" decoding="async" src="assets/images/project1-5.png" alt="Screenshot 2"></div>
+        <div class="project-img-item wipe"><img loading="lazy" decoding="async" src="assets/images/project1-3.png" alt="Screenshot 3"></div>
+        <div class="project-img-item wipe"><img loading="lazy" decoding="async" src="assets/images/project1-4.png" alt="Screenshot 4"></div>
       </div>
     </div>
   </article>
@@ -256,7 +256,7 @@
           </div>
         </div>
       
-        <div class="project-thumb project-thumb--tall"><img src="assets/images/cover.png" alt="Cover app screenshot"></div>
+        <div class="project-thumb project-thumb--tall"><img loading="lazy" decoding="async" src="assets/images/cover.png" alt="Cover app screenshot"></div>
       </div>
     </article>
 
@@ -275,7 +275,7 @@
             <a href="https://github.com/victionn/metroman-website" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
           </div>
         </div>
-        <div class="project-thumb"><img src="assets/images/map-website.png" alt="Interactive Map Website demo"></div>
+        <div class="project-thumb"><img loading="lazy" decoding="async" src="assets/images/map-website.png" alt="Interactive Map Website demo"></div>
       </div>
     </article>
 
@@ -293,7 +293,7 @@
             <a href="https://github.com/victionn/Pacman" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
           </div>
         </div>
-        <div class="project-thumb"><img src="assets/images/pacman.gif" alt="Pacman demo"></div>
+        <div class="project-thumb"><img loading="lazy" decoding="async" src="assets/images/pacman.gif" alt="Pacman demo"></div>
       </div>
     </article>
 
@@ -313,7 +313,7 @@
             <a href="https://github.com/victionn/crypto-sentiment" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
           </div>
         </div>
-        <div class="project-thumb"><img src="assets/images/sentiment-bot.png" alt="Crypto Sentiment Bot demo"></div>
+        <div class="project-thumb"><img loading="lazy" decoding="async" src="assets/images/sentiment-bot.png" alt="Crypto Sentiment Bot demo"></div>
       </div>
     </article>
 
@@ -331,7 +331,7 @@
             <a href="https://github.com/victionn/distributed-packaging-system" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
           </div>
         </div>
-        <div class="project-thumb"><img src="assets/images/bittorrent.png" alt="Bytetyde demo"></div>
+        <div class="project-thumb"><img loading="lazy" decoding="async" src="assets/images/bittorrent.png" alt="Bytetyde demo"></div>
       </div>
     </article>
 
@@ -376,20 +376,20 @@
 
         <div class="chapter-photos reveal">
           <div class="chapter-photo" style="--rot: -4deg; --lift: 0px">
-            <img src="assets/images/soccer1-1.png" alt="Football moment 1">
+            <img loading="lazy" decoding="async" src="assets/images/soccer1-1.png" alt="Football moment 1">
           </div>
           <div class="chapter-photo" style="--rot: 2.5deg; --lift: 10px">
-            <img src="assets/images/soccer2.png" alt="Football moment 2">
+            <img loading="lazy" decoding="async" src="assets/images/soccer2.png" alt="Football moment 2">
           </div>
           <div class="chapter-photo" style="--rot: -1.5deg; --lift: 4px">
-            <img src="assets/images/soccer3.png" alt="Football moment 3">
+            <img loading="lazy" decoding="async" src="assets/images/soccer3.png" alt="Football moment 3">
           </div>
         </div>
       </div>
 
       <div class="chapter-visual chapter-visual--video reveal">
         <div class="video-showcase">
-          <video class="chapter-video" src="assets/videos/pen.mp4" autoplay muted loop playsinline></video>
+          <video class="chapter-video" data-src="assets/videos/pen.mp4" preload="none" muted loop playsinline></video>
           <div class="video-overlay">
             <button class="video-unmute-btn" onclick="toggleMute(this)" aria-label="Toggle sound">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -423,20 +423,20 @@
         </p>
         <div class="chapter-photos reveal">
           <div class="chapter-photo" style="--rot: 3deg; --lift: 6px">
-            <img src="assets/images/bar-1.png" alt="Bartending moment 1">
+            <img loading="lazy" decoding="async" src="assets/images/bar-1.png" alt="Bartending moment 1">
           </div>
           <div class="chapter-photo" style="--rot: -2deg; --lift: 0px">
-            <img src="assets/images/bar-2.png" alt="Bartending moment 2">
+            <img loading="lazy" decoding="async" src="assets/images/bar-2.png" alt="Bartending moment 2">
           </div>
           <div class="chapter-photo" style="--rot: 4.5deg; --lift: 8px">
-            <img src="assets/images/bar-3.png" alt="Bartending moment 3">
+            <img loading="lazy" decoding="async" src="assets/images/bar-3.png" alt="Bartending moment 3">
           </div>
         </div>
       </div>
 
       <div class="chapter-visual chapter-visual--video reveal">
         <div class="video-showcase">
-          <video class="chapter-video" src="assets/videos/bar.mp4" autoplay muted loop playsinline></video>
+          <video class="chapter-video" data-src="assets/videos/bar.mp4" preload="none" muted loop playsinline></video>
           <div class="video-overlay">
             <button class="video-unmute-btn" onclick="toggleMute(this)" aria-label="Toggle sound">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -477,13 +477,13 @@
 
         <div class="chapter-photos reveal">
           <div class="chapter-photo" style="--rot: -3deg; --lift: 5px">
-            <img src="assets/images/game1.png" alt="Gaming moment 1">
+            <img loading="lazy" decoding="async" src="assets/images/game1.png" alt="Gaming moment 1">
           </div>
           <div class="chapter-photo" style="--rot: 2deg; --lift: 0px">
-            <img src="assets/images/game2.png" alt="Gaming moment 2">
+            <img loading="lazy" decoding="async" src="assets/images/game2.png" alt="Gaming moment 2">
           </div>
           <div class="chapter-photo" style="--rot: -1deg; --lift: 8px">
-            <img src="assets/images/game3.png" alt="Gaming moment 3">
+            <img loading="lazy" decoding="async" src="assets/images/game3.png" alt="Gaming moment 3">
           </div>
         </div>
       </div>
@@ -549,9 +549,9 @@
   </div>
 </div>
 
-<script src="assets/js/shader.js?v=3" defer></script>
+<script src="assets/js/shader.js?v=4" defer></script>
 <script src="assets/js/starfield.js?v=2" defer></script>
-<script src="assets/js/animations.js?v=14" defer></script>
-<script src="assets/js/projects.js?v=3" defer></script>
+<script src="assets/js/animations.js?v=15" defer></script>
+<script src="assets/js/projects.js?v=4" defer></script>
 </body>
 </html>

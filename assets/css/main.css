@@ -184,6 +184,14 @@ nav.scrolled .nav-links {
   padding: 7rem var(--pad-x) 5rem;
   overflow: hidden;
   text-align: center;
+  /* static aurora stand-in: shows before the WebGL canvas paints over it,
+     and permanently where WebGL is unavailable (old devices, Lockdown
+     Mode, or a lost context) — the hero is never a black void */
+  background:
+    radial-gradient(ellipse 50% 60% at 16% 42%, rgba(125, 211, 252, 0.10), transparent 70%),
+    radial-gradient(ellipse 45% 55% at 84% 55%, rgba(165, 180, 252, 0.09), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 50% 15%, rgba(94, 130, 190, 0.06), transparent 75%),
+    var(--bg);
 }
 
 #shader-canvas {

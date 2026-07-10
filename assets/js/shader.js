@@ -1,14 +1,22 @@
 /* Aurora shader — WebGL port of web-gl-shader.tsx (identical GLSL).
    Renders chromatic sine ribbons behind the hero. Pauses when the hero
    is off-screen or the tab is hidden; renders a single static frame
-   when the user prefers reduced motion. */
+   when the user prefers reduced motion. Survives context loss (mobile
+   Safari evicts WebGL contexts under first-load memory pressure) and
+   tracks layout changes so the buffer never goes stale. */
 (function () {
   const canvas = document.getElementById('shader-canvas');
-  if (!canvas) return;
 
-  const gl = canvas.getContext('webgl', { antialias: true, alpha: false })
-          || canvas.getContext('experimental-webgl');
-  if (!gl) { canvas.style.display = 'none'; return; }
+  let announced = false;
+  function announce() {
+    // tell the preloader the background is resolved (painted or given up)
+    if (announced) return;
+    announced = true;
+    window.__auroraReady = true;
+    try { document.dispatchEvent(new Event('aurora-ready')); } catch (e) {}
+  }
+
+  if (!canvas) { announce(); return; }
 
   const VERT = `
     attribute vec3 position;
@@ -91,53 +99,77 @@
     }
   `;
 
-  function compile(type, src) {
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      console.error(gl.getShaderInfoLog(s));
-      return null;
-    }
-    return s;
-  }
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
 
-  const vs = compile(gl.VERTEX_SHADER, VERT);
-  const fs = compile(gl.FRAGMENT_SHADER, FRAG);
-  if (!vs || !fs) { canvas.style.display = 'none'; return; }
-
-  const program = gl.createProgram();
-  gl.attachShader(program, vs);
-  gl.attachShader(program, fs);
-  gl.linkProgram(program);
-  gl.useProgram(program);
-
-  // Fullscreen quad (two triangles)
-  const positions = new Float32Array([
-    -1, -1, 0,   1, -1, 0,   -1, 1, 0,
-     1, -1, 0,  -1,  1, 0,    1, 1, 0,
-  ]);
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-  const posLoc = gl.getAttribLocation(program, 'position');
-  gl.enableVertexAttribArray(posLoc);
-  gl.vertexAttribPointer(posLoc, 3, gl.FLOAT, false, 0, 0);
-
-  const uResolution = gl.getUniformLocation(program, 'resolution');
-  const uTime       = gl.getUniformLocation(program, 'time');
-
+  let gl = null;
+  let uResolution = null;
+  let uTime = null;
   let time = 30; // start mid-flow so the first (or reduced-motion) frame shows developed curtains
   let rafId = null;
   let inView = true;
 
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+  function fail() {
+    canvas.style.display = 'none'; // CSS gradient on #hero takes over
+    announce();
+  }
 
-  function resize() {
-    const w = Math.floor(canvas.clientWidth * dpr);
-    const h = Math.floor(canvas.clientHeight * dpr);
-    if (canvas.width !== w || canvas.height !== h) {
+  /* Create the context and (re)build all GL state. Runs once at boot and
+     again after webglcontextrestored, so nothing may leak between runs. */
+  function initGL() {
+    gl = canvas.getContext('webgl', { antialias: true, alpha: false })
+      || canvas.getContext('experimental-webgl');
+    if (!gl || gl.isContextLost()) return false;
+
+    function compile(type, src) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(s));
+        return null;
+      }
+      return s;
+    }
+
+    const vs = compile(gl.VERTEX_SHADER, VERT);
+    const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) return false;
+
+    const program = gl.createProgram();
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error(gl.getProgramInfoLog(program));
+      return false;
+    }
+    gl.useProgram(program);
+
+    // Fullscreen quad (two triangles)
+    const positions = new Float32Array([
+      -1, -1, 0,   1, -1, 0,   -1, 1, 0,
+       1, -1, 0,  -1,  1, 0,    1, 1, 0,
+    ]);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+    const posLoc = gl.getAttribLocation(program, 'position');
+    gl.enableVertexAttribArray(posLoc);
+    gl.vertexAttribPointer(posLoc, 3, gl.FLOAT, false, 0, 0);
+
+    uResolution = gl.getUniformLocation(program, 'resolution');
+    uTime       = gl.getUniformLocation(program, 'time');
+
+    resize(true);
+    return true;
+  }
+
+  function resize(force) {
+    if (!gl) return;
+    const w = Math.max(1, Math.floor(canvas.clientWidth * dpr));
+    const h = Math.max(1, Math.floor(canvas.clientHeight * dpr));
+    if (force || canvas.width !== w || canvas.height !== h) {
       canvas.width = w;
       canvas.height = h;
       gl.viewport(0, 0, w, h);
@@ -146,10 +178,12 @@
   }
 
   function draw() {
+    if (!gl || gl.isContextLost()) return;
     gl.uniform1f(uTime, time);
     gl.clearColor(0, 0, 0, 1);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
+    announce();
   }
 
   function frame() {
@@ -165,8 +199,23 @@
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
   }
 
-  resize();
+  if (!initGL()) { fail(); return; }
   draw(); // always paint at least one frame
+
+  /* Mobile Safari (and low-memory devices generally) may evict the context
+     during a heavy first load. Recover instead of staying black forever. */
+  canvas.addEventListener('webglcontextlost', function (e) {
+    e.preventDefault(); // opt in to restoration
+    pause();
+  });
+  canvas.addEventListener('webglcontextrestored', function () {
+    if (initGL()) {
+      draw();
+      if (!reducedMotion && inView && !document.hidden) play();
+    } else {
+      fail();
+    }
+  });
 
   if (!reducedMotion) {
     play();
@@ -183,5 +232,10 @@
     });
   }
 
+  // Track the element itself, not just the window: fonts and late layout
+  // shift the hero's height after boot, which used to leave a stale buffer
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(function () { resize(); draw(); }).observe(canvas);
+  }
   window.addEventListener('resize', function () { resize(); draw(); });
 })();
